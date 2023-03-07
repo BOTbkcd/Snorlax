@@ -38,7 +38,7 @@ def downloadLink(url, file_name):
         print('Image couldn\'t be retrieved')
     return
 
-if	__name__	==	"__main__":
+if __name__ == "__main__":
     SCRAPE_PAGE_URL = input("Enter url of page to be be scraped: \n")
     SCRAPE_SELECTOR = input("\nEnter css selector for urls to be scraped: \n")
 
