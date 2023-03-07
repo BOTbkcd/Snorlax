@@ -1,7 +1,7 @@
 import requests
-import shutil
 from urllib.parse import urljoin
 from bs4 import BeautifulSoup
+from concurrent.futures import ThreadPoolExecutor as Executor
 
 from Image_Scrape import downloadLink
 
@@ -34,11 +34,14 @@ SCRAPE_PAGE_URL = input("Enter getty search page url: \n")
 
 imgPages = fetchPages()
 
-imgLinks = []
-for pageUrl in imgPages:
-    imgLinks.append(fetchImgLink(pageUrl))
+with Executor(max_workers=5) as exec:
+    imgLinks = []
 
-print(imgLinks)
+    for pageUrl in imgPages:
+        exec.submit(imgLinks.append(fetchImgLink(pageUrl)))
+
 for link in imgLinks:
-    title = link[33:43] + ".jpg"
+    id_start = 33
+    id_end = link.index('/', 34)
+    title = link[id_start:id_end] + ".jpg"
     downloadLink(link, title)

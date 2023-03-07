@@ -1,7 +1,8 @@
 import subprocess
 from pathlib import Path
 
-HOME = str(Path.home())
+# Location where nnn store the selected files
+# The file paths are seperated by null byte
 NNN_SELECTION = '/home/bot_bkcd/.config/nnn/.selection'
 
 with open(NNN_SELECTION, 'rb') as file:
