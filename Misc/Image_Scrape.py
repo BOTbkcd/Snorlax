@@ -14,20 +14,20 @@ headers.update({
     'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:52.0) Gecko/20100101 Firefox/52.0',
 })
 
-def fetchLinks() -> list:
-    html = requests.get(SCRAPE_PAGE_URL, headers=headers).text
+def fetchLinks(pageUrl, selector) -> list:
+    html = requests.get(pageUrl, headers=headers).text
     bs = BeautifulSoup(html, 'html.parser')
-    list = bs.select(SCRAPE_SELECTOR)
+    list = bs.select(selector)
 
     links = []
     for node in list:
-        link =  urljoin(SCRAPE_PAGE_URL, node.attrs['src'])
+        link =  urljoin(pageUrl, node.attrs['src'])
         link = link.replace("thumb_", "")
         title = node.attrs['alt']
         links.append([title, link])
     return links
 
-def downloadLink(url, file_name):
+def downloadLink(url, file_name) -> None:
     print("\nDownloading: ", file_name)
     res = requests.get(url, stream = True)
     if res.status_code == 200:
@@ -44,7 +44,7 @@ if __name__ == "__main__":
 
     table = Table(Column(header="Links Extracted", justify="center"), show_lines=True)
 
-    links = fetchLinks()
+    links = fetchLinks(SCRAPE_PAGE_URL, SCRAPE_SELECTOR)
 
     for link in links:
         table.add_row(link[1])
