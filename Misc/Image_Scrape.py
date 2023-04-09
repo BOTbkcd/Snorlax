@@ -5,8 +5,8 @@ from bs4 import BeautifulSoup
 
 from rich.prompt import Confirm
 from rich.table import Table, Column
-from rich import box
 from rich.console import Console
+from rich.prompt import Prompt
 
 
 headers = requests.utils.default_headers()
@@ -21,9 +21,12 @@ def fetchLinks(pageUrl, selector) -> list:
 
     links = []
     for node in list:
-        link =  urljoin(pageUrl, node.attrs['src'])
-        link = link.replace("thumb_", "")
-        title = node.attrs['alt']
+        link =  urljoin(pageUrl, node.attrs[SCRAPE_MODE])
+        # link = link.replace("thumb_", "")
+
+        index = str(link).rindex('/')
+        title = str(link)[index+1:]
+        
         links.append([title, link])
     return links
 
@@ -41,6 +44,7 @@ def downloadLink(url, file_name) -> None:
 if __name__ == "__main__":
     SCRAPE_PAGE_URL = input("Enter url of page to be be scraped: \n")
     SCRAPE_SELECTOR = input("\nEnter css selector for urls to be scraped: \n")
+    SCRAPE_MODE	= Prompt.ask("Enter selection mode: ", choices=["src",	"href"])
 
     table = Table(Column(header="Links Extracted", justify="center"), show_lines=True)
 
@@ -55,4 +59,4 @@ if __name__ == "__main__":
     if(validate):
         for link in links:
             print(link)
-            downloadLink(link[1], (link[0] + ".jpg"))
+            downloadLink(link[1], (link[0]))
