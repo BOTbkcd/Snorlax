@@ -1,7 +1,7 @@
 import os
 import re
 
-ROOT_FOLDER = "/home/bot_bkcd/Volumes/Blitzkrieg/JavaScript/Angular/Udemy"
+ROOT_FOLDER = "/home/bot_bkcd/Volumes/Blitzkrieg/Go/Udemy"
 
 for root, dirs, files in os.walk(ROOT_FOLDER):
     for file in files:
