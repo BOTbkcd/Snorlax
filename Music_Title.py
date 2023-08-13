@@ -6,10 +6,15 @@ from pathlib import Path
 # The file paths are seperated by null byte
 NNN_SELECTION = '/home/bot_bkcd/.config/nnn/.selection'
 
+def sanitizePath(fileName):
+    return fileName.replace("'", "\\'")
+
 with open(NNN_SELECTION, 'rb') as file:
     raw_data = file.read()
     list = raw_data.split(b'\0')
 
 for item in list:
-    subprocess.run(["kid3-cli", "-c", f"set title '{Path(item.decode()).stem}'", Path(item.decode())])
+    subprocess.run(["kid3-cli", "-c", f"set title '{sanitizePath(Path(item.decode()).stem)}'", Path(item.decode())])
 # kid3-cli -c "set title 'Kalankani Radha'" Bongo\ -\ Kalankani\ Radha.mp3
+
+
