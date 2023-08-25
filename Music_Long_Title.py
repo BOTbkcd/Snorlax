@@ -15,6 +15,5 @@ with open(NNN_SELECTION, 'rb') as file:
 
 for item in list:
     subprocess.run(["kid3-cli", "-c", f"set title '{sanitizePath(Path(item.decode()).stem)}'", Path(item.decode())])
-# kid3-cli -c "set title 'Kalankani Radha'" Bongo\ -\ Kalankani\ Radha.mp3
 
 
