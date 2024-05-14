@@ -40,8 +40,6 @@ func updateArtist(path string) {
 	artist, _, isPresent := strings.Cut(filepath.Base(path), " - ")
 	if isPresent {
 		fmt.Println(artist)
-		//(["kid3-cli", "-c", f"set artist '{formattedTitle}'", Path(item.decode())])
-		// exec.Command("kid3-cli", "-c", "set", "artist", formattedTitle, path)
 
 		//No need to escape space or ' character, Command function takes care of that
 		exec.Command("kid3-cli", "-c", fmt.Sprintf("set artist '%s'", sanitizeTitle(artist)), path).Output()

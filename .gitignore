@@ -1,1 +1,4 @@
 Temp/
+BookmarkX/target/
+__pycache__/
+*.code-workspace

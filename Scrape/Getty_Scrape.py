@@ -38,7 +38,9 @@ with Executor(max_workers=5) as exec:
     imgLinks = []
 
     for pageUrl in imgPages:
-        exec.submit(imgLinks.append(fetchImgLink(pageUrl)))
+        future = exec.submit(fetchImgLink, pageUrl)
+        future.add_done_callback(imgLinks.append(future.result()))
+        
 
 for link in imgLinks:
     id_start = 33

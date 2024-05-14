@@ -1,0 +1,7 @@
+go 1.21.1
+
+use (
+	./Music_Set_Artist
+	./Music_Short_Title
+	./Temp/Notification_Scheduler
+)
